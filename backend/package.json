@@ -1,5 +1,5 @@
 {
-  "name": "goodreads_backend",
+  "name": "backend",
   "version": "1.0.0",
   "description": "Good reads backend using node",
   "main": "index.js",
