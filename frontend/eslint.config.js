@@ -22,7 +22,10 @@ export default defineConfig([
         sourceType: 'module',
       },
     },
+    plugins: ["simple-import-sort"],
     rules: {
+      "simple-import-sort/imports":"error",
+      "semi": [1, "always"],
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
     },
   },
