@@ -1,12 +1,27 @@
+import { useState } from "react";
 import Button from "src/Components/Button/Button";
 import FormComponent from "src/Components/FormComponent/FormComponent";
 import InputComponent from "src/Components/InputComponent/InputComponent";
 import LinkButton from "src/Components/LinkButton/LinkButton";
 
 function Signin() {
+  const [signInDetails, setSignInDetails] = useState({
+    email: "",
+    password: "",
+  });
+
   function onSubmitHandler(event) {
     event.preventDefault();
   }
+
+  function handleFormChange(event) {
+    const { name, value } = event.target;
+    setSignInDetails({
+      ...signInDetails,
+      [name]: value,
+    });
+  }
+
   return (
     <div className="h-[100vh] flex flex-col items-center justify-center ">
       <div>
@@ -22,8 +37,20 @@ function Signin() {
       </div>
       <div className="w-full">
         <FormComponent onSubmitHandler={onSubmitHandler}>
-          <InputComponent inputType={"email"} placeholder={"Email..."} />
-          <InputComponent inputType={"password"} placeholder={"Password"} />
+          <InputComponent
+            inputType={"email"}
+            inputName={"email"}
+            placeholder={"Email..."}
+            inputValue={signInDetails.email}
+            onChangeHandler={handleFormChange}
+          />
+          <InputComponent
+            inputType={"password"}
+            inputName={"password"}
+            placeholder={"Password..."}
+            inputValue={signInDetails.password}
+            onChangeHandler={handleFormChange}
+          />
           <Button
             buttonText={"Submit"}
             buttonType="submit"

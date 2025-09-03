@@ -1,11 +1,33 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Button from "src/Components/Button/Button";
 import FormComponent from "src/Components/FormComponent/FormComponent";
 import InputComponent from "src/Components/InputComponent/InputComponent";
 import LinkButton from "src/Components/LinkButton/LinkButton";
+import { signup } from "src/Store/Slices/authSlice";
 
 function Signup() {
-  function onSubmitHandler(event) {
-    event.preventDefault();
+  const [signupDetails, setSignupDetails] = useState({
+    username: "",
+    email: "",
+    password: "",
+  }); 
+
+  const dispatch = useDispatch(); 
+  const navigate = useNavigate(); 
+
+  async function onSubmitHandler(event) {
+    event.preventDefault(); 
+    const response = await dispatch(signup(signupDetails)); 
+  }
+
+  function handleFormChange(event) {
+    const { name, value } = event.target;
+    setSignupDetails({
+      ...signupDetails,
+      [name]: value,
+    });
   }
 
   return (
@@ -23,9 +45,27 @@ function Signup() {
       </div>
       <div className="w-full">
         <FormComponent onSubmitHandler={onSubmitHandler}>
-          <InputComponent inputType={"text"} placeholder={"Username..."} />
-          <InputComponent inputType={"email"} placeholder={"Email..."} />
-          <InputComponent inputType={"password"} placeholder={"Password"} />
+          <InputComponent
+            inputName={"username"}
+            inputType={"text"}
+            placeholder={"Username..."}
+            inputValue={signupDetails.username}
+            onChangeHandler={handleFormChange}
+          />
+          <InputComponent
+            inputType={"email"}
+            inputName={"email"}
+            placeholder={"Email..."}
+            inputValue={signupDetails.email}
+            onChangeHandler={handleFormChange}
+          />
+          <InputComponent
+            inputName={"password"}
+            inputType={"password"}
+            placeholder={"Password..."}
+            inputValue={signupDetails.password}
+            onChangeHandler={handleFormChange}
+          />
           <Button
             buttonText={"Submit"}
             buttonType="submit"

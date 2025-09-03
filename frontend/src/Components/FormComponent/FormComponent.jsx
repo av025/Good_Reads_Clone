@@ -1,6 +1,3 @@
-import Button from "../Button/Button";
-import InputComponent from "../InputComponent/InputComponent";
-
 function FormComponent({ onSubmitHandler, children }) {
   return (
     <form

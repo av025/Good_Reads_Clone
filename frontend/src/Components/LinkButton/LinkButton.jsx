@@ -11,7 +11,7 @@ function LinkButton({
     <Link to={linkTo}>
       <button
         className={`btn btn-${buttonCategory} rounded-md px-2 mx-5 hover:bg-green-400 text-${buttonTextColor}`}
-        buttonType={buttonType}
+        type={buttonType}
       >
         {buttonText}
       </button>
