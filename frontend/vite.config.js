@@ -15,7 +15,7 @@ export default defineConfig({
       helpers:"/src/Helpers",
       layout:"/src/Layouts",
       assests:"/src/Assests",
-      redux:"/src/Redux",
+      store:"/src/Store",
       routes:"/src/Routes"
 
     }
