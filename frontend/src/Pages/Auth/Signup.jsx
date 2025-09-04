@@ -1,10 +1,11 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Button from "src/Components/Button/Button";
 import FormComponent from "src/Components/FormComponent/FormComponent";
 import InputComponent from "src/Components/InputComponent/InputComponent";
 import LinkButton from "src/Components/LinkButton/LinkButton";
+import Layout from "src/Layouts/Layout";
 import { signup } from "src/Store/Slices/authSlice";
 
 function Signup() {
@@ -16,6 +17,7 @@ function Signup() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const state = useSelector((state) => state.auth)
 
 async  function onSubmitHandler(event) {
     event.preventDefault();
@@ -43,7 +45,16 @@ async  function onSubmitHandler(event) {
     });
   }
 
+  useEffect(() => {
+      console.log(state);
+      if (state.isLoggedIn) {
+        navigate("/dashboard");
+      }
+    }, []);
+
   return (
+    <Layout>
+
     <div className="h-[100vh] flex flex-col items-center justify-center ">
       <div>
         <h1 className="text-white text-3xl">Create a New Account</h1>
@@ -71,7 +82,7 @@ async  function onSubmitHandler(event) {
             placeholder={"Email..."}
             inputValue={signupDetails.email}
             onChangeHandler={handleFormChange}
-          />
+            />
           <InputComponent
             inputName={"password"}
             inputType={"password"}
@@ -82,12 +93,13 @@ async  function onSubmitHandler(event) {
           <Button
             buttonText={"Submit"}
             buttonType="submit"
-            buttonWidth={"w-1/3"}
+            buttonWidth={"w-full"}
             buttonCategory={"success"}
-          />
+            />
         </FormComponent>
       </div>
     </div>
+            </Layout>
   );
 }
 

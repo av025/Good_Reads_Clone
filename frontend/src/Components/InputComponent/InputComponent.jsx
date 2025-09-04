@@ -7,7 +7,7 @@ function InputComponent({
 }) {
   return (
     <>
-      <div className="my-3 w-1/3">
+      <div className="my-3 w-full">
         <input
           type={inputType}
           name={inputName}

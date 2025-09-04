@@ -1,7 +1,7 @@
 function FormComponent({ onSubmitHandler, children }) {
   return (
     <form
-      className="flex flex-col justify-center items-center w-3/4 mx-auto"
+      className="flex flex-col justify-center items-center w-full mx-auto"
       autoComplete="off"
       onSubmit={onSubmitHandler}
     >
