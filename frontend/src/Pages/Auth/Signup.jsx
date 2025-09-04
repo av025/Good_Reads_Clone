@@ -12,14 +12,27 @@ function Signup() {
     username: "",
     email: "",
     password: "",
-  }); 
+  });
 
-  const dispatch = useDispatch(); 
-  const navigate = useNavigate(); 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  async function onSubmitHandler(event) {
-    event.preventDefault(); 
-    const response = await dispatch(signup(signupDetails)); 
+async  function onSubmitHandler(event) {
+    event.preventDefault();
+    const response =  await dispatch(signup(signupDetails));
+    if (response?.payload?.data) {
+      navigate("/signin");
+    } 
+    resetSignupForm(); 
+  } 
+
+  function resetSignupForm() {
+    setSignupDetails({
+      username:"",
+      email:"",
+      password:"",
+
+    })
   }
 
   function handleFormChange(event) {

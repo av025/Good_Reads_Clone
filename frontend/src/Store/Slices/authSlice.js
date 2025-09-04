@@ -8,32 +8,59 @@ const initialState = {
   token: localStorage.getItem("token") || "",
 };
 
+export const signup = createAsyncThunk("auth/signup", async (data) => {
+  try {
+    const response = await toast.promise(axiosInstance.post("/signup", data), {
+      loading: "Submitting the Form",
+      success: "Successfully Signed Up",
+      error: "Something went wrong",
+    });
+
+    return response.data;
+  } catch (error) {
+    if (error?.response?.data?.err) {
+      toast.error(error?.response?.data?.err);
+    } else {
+      toast.error("We are not Signup , Something went wrong !!!!");
+    }
+  }
+});
+
+export const signin = createAsyncThunk("auth/signin", async (data) => {
+  try {
+    const response = await toast.promise(axiosInstance.post("/signin", data), {
+      loading: "Submitting the Form",
+      success: "Successfully Signed In",
+      error: "Something went wrong",
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error(error.message);
+    toast.error("We are not Signin , Something went wrong !!!!");
+  }
+});
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {},
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+  builder.addCase(signin.fulfilled, (state, action) => {
+    if (action?.payload?.data) {
+      const receivedData = action.payload.data;
+
+      state.isLoggedIn = true;
+      state.username = receivedData.username;
+      state.token = receivedData.token;
+
+      localStorage.setItem("isLoggedIn", true);
+      localStorage.setItem("username", receivedData.username);
+      localStorage.setItem("token", receivedData.token);
+    }
+  });
+}
+
 });
 
-export const signup = createAsyncThunk("auth/signup",async (data) => {
-    try { 
-       const response = await toast.promise(
-  axiosInstance.post("/signup", data),
-  {
-    loading: "Submitting the Form",
-    success: "Successfully Signed Up",
-    error: "Something went wrong",
-  }
-); 
-console.log(response.data)
-return response.data;
-
-        
-    } catch (error) {
-        console.error(error.message);
-        toast.error("We are not Signup , Something went wrong !!!!")
-    }
-})
-
-
-export default authSlice.reducer
+export default authSlice.reducer;

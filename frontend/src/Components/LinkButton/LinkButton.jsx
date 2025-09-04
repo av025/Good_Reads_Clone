@@ -6,7 +6,7 @@ function LinkButton({
   buttonCategory,
   buttonType = "button",
   buttonTextColor,
-}) {
+}) { 
   return (
     <Link to={linkTo}>
       <button
