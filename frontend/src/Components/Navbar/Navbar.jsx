@@ -14,7 +14,7 @@ function Navbar() {
     <div className="navbar bg-gray-800 px-10">
       <div className="flex-1">
         <Link
-          to={"/dashboard"}
+          to={"/"}
           className="btn btn-success-content normal-case text-xl"
         >
           Book Shelf
