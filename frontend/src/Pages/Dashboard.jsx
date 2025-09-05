@@ -1,17 +1,31 @@
+import { use, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import BookCard from "src/Components/BookCard/BookCard";
 import Layout from "src/Layouts/Layout";
+import { getAllBooks } from "src/Store/Slices/bookSlice";
 
 function Dashboard() {
+const bookState = useSelector((state) => state.book);
+const dispatch = useDispatch(); 
+
+async function loadBooks() { 
+  if(bookState.bookList.length === 0) {
+         const response = await dispatch(getAllBooks()); 
+         console.log(response)
+  }
+
+}
+
+useEffect(() => { 
+  loadBooks()
+}, []);
+
   return (
     <>
       <Layout>
-        <BookCard
-          bookTitle={
-            "Skandar and the Spirit War Unmissable finale to the adventure series that everyone is talking about!"
-          }
-          bookAuthor={" A.F. STEADMAN"}
-          bookDescription={`The most popular children’s fantasy hero since Harry Potter`}
-        />
+        {bookState.bookList.length > 0 && bookState.bookList.map((book) => {
+          return <BookCard key={book.id}  />
+        })}
       </Layout>
     </>
   );
